@@ -13,7 +13,8 @@ export const ProfileUI: FC<ProfileUIProps> = ({
   updateUserError,
   handleSubmit,
   handleCancel,
-  handleInputChange
+  handleInputChange,
+  isSaved
 }) => (
   <main className={`${commonStyles.container}`}>
     <div className={`mt-30 mr-15 ${styles.menu}`}>
@@ -63,7 +64,7 @@ export const ProfileUI: FC<ProfileUIProps> = ({
             icon={'EditIcon'}
           />
         </div>
-        {isFormChanged && (
+        {!isSaved && isFormChanged && (
           <div className={styles.button}>
             <Button
               type='secondary'

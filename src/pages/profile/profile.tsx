@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from '../../services/store';
 import { selectUser, updateUser } from '../../services/slices/userSlice';
 
 export const Profile: FC = () => {
-  /** TODO: взять переменную из стора */
-
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
@@ -14,6 +12,8 @@ export const Profile: FC = () => {
     email: user?.email || '',
     password: ''
   });
+
+  const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
     setFormValue((prevState) => ({
@@ -28,8 +28,14 @@ export const Profile: FC = () => {
     formValue.email !== user?.email ||
     !!formValue.password;
 
-  const handleSubmit = (e: SyntheticEvent) => {
+  const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
+    try {
+      await dispatch(updateUser(formValue));
+      setIsSaved(true);
+    } catch (error) {
+      console.error('Ошибка при сохранении:', error);
+    }
   };
 
   const handleCancel = (e: SyntheticEvent) => {
@@ -39,6 +45,7 @@ export const Profile: FC = () => {
       email: user?.email || '',
       password: ''
     });
+    setIsSaved(false);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,6 +53,7 @@ export const Profile: FC = () => {
       ...prevState,
       [e.target.name]: e.target.value
     }));
+    setIsSaved(false);
   };
 
   return (
@@ -55,6 +63,7 @@ export const Profile: FC = () => {
       handleCancel={handleCancel}
       handleSubmit={handleSubmit}
       handleInputChange={handleInputChange}
+      isSaved={isSaved}
     />
   );
 
