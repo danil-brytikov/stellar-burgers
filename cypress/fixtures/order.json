@@ -1,0 +1,13 @@
+{
+  "success": true,
+  "name": "Space Order",
+  "order": {
+    "_id": "order-1",
+    "status": "done",
+    "name": "Space Order",
+    "createdAt": "2026-03-01T10:00:00.000Z",
+    "updatedAt": "2026-03-01T10:00:00.000Z",
+    "number": 12345,
+    "ingredients": ["bun-1", "main-1", "bun-1"]
+  }
+}
